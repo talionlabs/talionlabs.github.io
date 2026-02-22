@@ -481,9 +481,7 @@ function positionLiveCursor() {
   const eR = tgEl.getBoundingClientRect();
 
   // ── Arena text scrolling ────────────────────────────────
-  // eR positions are visual (after current CSS transform).
-  // naturalTop = visual position + current scroll offset
-  const lineH  = parseFloat(getComputedStyle(wrap).lineHeight) || S.fontSize * 1.85;
+  const lineH = S.lineH || (parseFloat(getComputedStyle(wrap).lineHeight) || S.fontSize * 1.85);
   const visualTopEl = eR.top - wR.top;
   const naturalTop  = visualTopEl + S.arenaScroll;
 
@@ -496,7 +494,9 @@ function positionLiveCursor() {
     const tx = `translateY(-${S.arenaScroll}px)`;
     if (D.wordsTarget) D.wordsTarget.style.transform = tx;
     if (D.wordsTyped)  D.wordsTyped.style.transform  = tx;
-  }
+    cursor.style.transition = 'none';
+    requestAnimationFrame(() => { cursor.style.transition = ''; });
+    }
 
   // Cursor position uses natural coordinates relative to wrap
   let left = eR.left - wR.left;
