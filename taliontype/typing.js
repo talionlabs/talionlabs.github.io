@@ -1,5 +1,5 @@
 /**
- * typing.js — TalionType v3.0
+ * typing.js — TalionType
  * ════════════════════════════════════════════════════════════════
  * A TalionLabs product · https://talionlabs.github.io
  *
