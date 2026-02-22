@@ -194,7 +194,8 @@ const S = {
   wpmSamples: [],
   charTimes: [],   // ms elapsed when each char was typed (for ghost)
   curStreak: 0, bestStreak: 0,
-  arenaScroll: 0,   // px of vertical scroll offset in the words-wrap
+  arenaScroll: 0, // px of vertical scroll offset in the words-wrap
+  lineH: 0,
   // Level (WPM-based)
   bestWpm: 0,
   // Settings
@@ -432,6 +433,11 @@ function renderArena() {
     span.className  = 'tg tg-u';
     span.textContent = ch;
     D.wordsTarget.appendChild(span);
+  });
+  requestAnimationFrame(() => {
+    if (D.wordsWrap) {
+      S.lineH = parseFloat(getComputedStyle(D.wordsWrap).lineHeight) || S.fontSize * 1.85;
+    }
   });
 }
 
@@ -986,6 +992,7 @@ function initTest(isDaily = false) {
   S.correctChars = 0; S.totalTyped = 0;
   S.curStreak = 0; S.bestStreak = 0;
   S.arenaScroll = 0;
+  S.lineH = 0;
   S._totalPausedMs = 0;
   // Reset text layer scroll
   if (D.wordsTarget) D.wordsTarget.style.transform = '';
