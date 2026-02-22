@@ -481,7 +481,7 @@ img{max-width:100%;height:auto}
   line-height:1.85;
   font-family:inherit;font-size:inherit;
   word-break:break-word;white-space:pre-wrap;
-  transition:transform .18s cubic-bezier(.4,0,.2,1);
+  transition:none;
   will-change:transform;
 }
 .words-target{color:var(--text-m);pointer-events:none}
