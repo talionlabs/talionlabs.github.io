@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-color="teal">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>Free Typing Speed Test Online – WPM Test with Leaderboard | TalionType</title>
+  <meta name="description" content="Free online typing speed test. Measure your WPM with ghost races, adaptive difficulty, global leaderboards, achievements and daily challenges by TalionLabs." />
+  <link rel="canonical" href="https://talionlabs.github.io/taliontype/" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://talionlabs.github.io/taliontype/" />
+  <meta property="og:title"       content="Free Typing Speed Test Online – WPM Test | TalionType" />
+  <meta property="og:description" content="Measure your WPM with ghost races, adaptive difficulty, leaderboards and daily challenges. Free online typing test by TalionLabs." />
+  <meta property="og:image"       content="https://talionlabs.github.io/taliontype/taliontype/logo.png" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Free Typing Speed Test Online – TalionType" />
+  <meta name="twitter:description" content="Measure your WPM with ghost races, leaderboards and daily challenges. Free." />
+  <meta name="twitter:image"       content="https://talionlabs.github.io/taliontype/taliontype/logo.png" />
+  <link rel="icon"             type="image/png" href="taliontype/favicon.png" />
+  <link rel="apple-touch-icon"                  href="taliontype/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"TalionType","description":"Free online typing speed test with WPM measurement, ghost races, adaptive difficulty, global leaderboards, and daily challenges.","url":"https://talionlabs.github.io/taliontype/","applicationCategory":"EducationalApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"TalionLabs","url":"https://talionlabs.github.io"}}
+  </script>
+  <!-- GA4 — Replace G-XXXXXXXXXX -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');window.GA_ENABLED=true;</script>
+  -->
+</head>
+<body>
+
+<div class="bg-grid"    aria-hidden="true"></div>
+<div class="bg-glow g1" aria-hidden="true"></div>
+<div class="bg-glow g2" aria-hidden="true"></div>
+
+<!-- ══ HEADER ══════════════════════════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="hdr-inner">
+
+    <a class="logo" href="#" aria-label="TalionType home">
+      <img src="taliontype/logo.png" alt="TalionType" class="logo-img" onerror="this.style.display='none'" />
+      <span class="logo-mark">Talion<em>Type</em></span>
+    </a>
+
+    <!-- Level (desktop centre) -->
+    <div class="hdr-level" id="hdrLevel">
+      <div class="lvl-orb" id="lvlOrb">
+        <span class="lvl-num" id="lvlNum">1</span>
+      </div>
+      <div class="lvl-info">
+        <div class="lvl-row">
+          <span class="lvl-tag">LVL <b id="lvlDisp">1</b></span>
+          <span class="lvl-wpm" id="lvlWpmLabel">0 WPM best</span>
+        </div>
+        <div class="lvl-track"><div class="lvl-fill" id="lvlFill" style="width:0%"></div></div>
+        <div class="lvl-sublabel" id="lvlSub">3 WPM to next level</div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="hdr-nav" aria-label="Navigation">
+      <button class="nbtn" id="btnDaily">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="nb-lbl">Daily</span>
+        <span class="nbadge" id="dailyBadge" hidden>!</span>
+      </button>
+      <button class="nbtn" id="btnGhost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 1 8 8v8l-2-2-2 2-2-2-2 2-2-2-2 2v-8a8 8 0 0 1 8-8z"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg>
+        <span class="nb-lbl">Ghost</span>
+      </button>
+      <button class="nbtn" id="btnAch">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        <span class="nb-lbl">Awards</span>
+        <span class="nbadge" id="achBadge" hidden>!</span>
+      </button>
+      <button class="nbtn" id="btnLB">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="nb-lbl">Board</span>
+      </button>
+      <button class="nbtn" id="btnStats">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span class="nb-lbl">Stats</span>
+      </button>
+      <button class="nbtn" id="btnFriends">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="nb-lbl">Friends</span>
+      </button>
+
+      <div class="hdr-sep"></div>
+
+      <button class="auth-btn" id="authBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="authBtnTxt">Sign In</span>
+      </button>
+      <button class="pro-btn" id="btnPro">⚡ Pro</button>
+      <button class="nbtn" id="btnSet">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="nb-lbl">Settings</span>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="i-sun">☀</span><span class="i-moon">☽</span>
+      </button>
+    </nav>
+
+  </div>
+</header>
+
+<!-- ══ MAIN ══════════════════════════════════ -->
+<main class="app-main" id="appMain">
+
+  <!-- SEO H1 (visually hidden, in flow) -->
+  <h1 class="seo-h1">Free Typing Speed Test Online</h1>
+
+  <!-- Adaptive banner -->
+  <div class="adapt-banner" id="adaptToast" hidden>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    <span id="adaptMsg">Difficulty adapted to your level</span>
+    <button class="adapt-x" id="adaptClose" aria-label="Dismiss">✕</button>
+  </div>
+
+  <!-- Daily banner -->
+  <div class="daily-banner" id="dailyBanner" hidden>
+    <div class="db-inner">
+      <span class="db-ico">📅</span>
+      <div class="db-info">
+        <b>Daily Challenge</b>
+        <span id="dbDesc">—</span>
+      </div>
+      <span class="db-reward" id="dbReward">Bonus</span>
+      <button class="ctrl-btn accent small" id="btnStartDaily">Start</button>
+      <button class="db-x" id="closeDB" aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- ── CONFIG BAR ── -->
+  <section class="cfg-bar" aria-label="Test settings">
+    <!-- Mode -->
+    <div class="pill-group" role="group" aria-label="Mode">
+      <button class="pill active" data-mode="words">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/></svg>Words
+      </button>
+      <button class="pill" data-mode="sentences">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="4" y1="14" x2="20" y2="14"/><line x1="4" y1="18" x2="12" y2="18"/></svg>Sent
+      </button>
+      <button class="pill" data-mode="code">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Code
+      </button>
+      <button class="pill" data-mode="punctuation">!Punct</button>
+      <button class="pill" data-mode="numbers">123</button>
+      <button class="pill" data-mode="custom">Custom</button>
+    </div>
+
+    <div class="bar-sep"></div>
+
+    <!-- Difficulty -->
+    <div class="pill-group" role="group" aria-label="Difficulty">
+      <button class="pill" data-diff="easy">Easy</button>
+      <button class="pill active" data-diff="medium">Med</button>
+      <button class="pill" data-diff="hard">Hard</button>
+      <button class="pill pill-adapt" data-diff="adaptive">Auto</button>
+    </div>
+
+    <div class="bar-sep"></div>
+
+    <!-- Duration -->
+    <div class="pill-group" role="group" aria-label="Duration">
+      <button class="pill" data-time="15">15s</button>
+      <button class="pill active" data-time="30">30s</button>
+      <button class="pill" data-time="60">60s</button>
+      <button class="pill" data-time="120">120s</button>
+    </div>
+
+    <!-- Ghost toggle -->
+    <div class="ghost-wrap" id="ghostToggleWrap">
+      <label class="ghost-label" title="Race your personal best (Pro)">
+        <input type="checkbox" id="ghostToggle" />
+        <span class="ghost-pill">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 1 8 8v8l-2-2-2 2-2-2-2 2-2-2-2 2v-8a8 8 0 0 1 8-8z"/></svg>Ghost
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ── LIVE HUD ── -->
+  <div class="live-hud">
+    <div class="hchip" id="hcWpm">
+      <span class="hval" id="wpmVal">—</span>
+      <span class="hlbl">WPM</span>
+    </div>
+    <div class="hchip hchip-timer" id="hcTimer">
+      <span class="hval" id="timerVal">30</span>
+      <span class="hlbl">SEC</span>
+    </div>
+    <div class="hchip" id="hcAcc">
+      <span class="hval" id="accVal">—</span>
+      <span class="hlbl">ACC</span>
+    </div>
+    <div class="hchip" id="hcStreak">
+      <span class="hval" id="streakVal">0</span>
+      <span class="hlbl">STREAK</span>
+    </div>
+    <div class="hchip hchip-ghost" id="hcGhost" hidden>
+      <span class="hval ghost-hval" id="ghostWpmVal">—</span>
+      <span class="hlbl">👻 GHOST</span>
+    </div>
+  </div>
+
+  <!-- ── ARENA ── -->
+  <div class="arena" id="arena">
+    <div class="arena-prog" id="arenaProg">
+      <div class="arena-fill" id="arenaFill"></div>
+    </div>
+
+    <div class="ghost-bar" id="ghostBar" hidden>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 1 8 8v8l-2-2-2 2-2-2-2 2-2-2-2 2v-8a8 8 0 0 1 8-8z"/></svg>
+      Ghost: <b id="ghostRecordWpm">—</b>
+      <span class="ghost-vs" id="ghostVsLabel">You: —</span>
+    </div>
+
+    <div class="words-wrap" id="wordsWrap">
+      <div class="words-target" id="wordsTarget"></div>
+      <div class="words-typed"  id="wordsTyped"></div>
+      <div class="live-cursor"  id="liveCursor"></div>
+      <div class="ghost-cursor" id="ghostCursor" hidden></div>
+    </div>
+
+    <textarea class="ghost-input" id="ghostInput"
+      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      aria-label="Type here" tabindex="0"></textarea>
+
+    <div class="arena-hint" id="arenaHint">
+      Click here or press <kbd>Tab</kbd> to begin typing
+    </div>
+
+    <div class="paused-ov" id="pausedOv" hidden>
+      <div class="paused-inner">
+        <div style="font-size:2.5rem">⏸</div>
+        <div style="font-weight:700;font-size:1.1rem;margin:.5rem 0">Paused</div>
+        <button class="ctrl-btn accent" id="btnResume">Resume</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTROLS ── -->
+  <div class="ctrls-row">
+    <button class="ctrl-btn accent" id="btnReset">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+      Restart
+    </button>
+    <button class="ctrl-btn" id="btnPause" disabled>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      <span id="pauseLbl">Pause</span>
+    </button>
+  </div>
+
+  <!-- ══ RESULTS ══ -->
+  <section class="results-panel" id="resultsPanel" hidden>
+    <canvas class="confetti-cv" id="confettiCv" aria-hidden="true"></canvas>
+
+    <div class="res-hdr">
+      <div class="res-title-row">
+        <h2 class="res-title">Test Complete</h2>
+        <div class="res-badges" id="resBadges"></div>
+      </div>
+      <div class="res-hero">
+        <span class="res-wpm-big" id="resWpmBig">0</span>
+        <span class="res-wpm-unit">WPM</span>
+      </div>
+      <div class="lvl-up-badge" id="lvlUpBadge" hidden>⬆ LEVEL UP!</div>
+    </div>
+
+    <div class="score-grid">
+      <div class="scard scard-hero"><div class="sv" id="resWpm">0</div><div class="sl">WPM</div><div class="ss" id="resWpmNote"></div></div>
+      <div class="scard"><div class="sv" id="resRaw">0</div><div class="sl">Raw WPM</div></div>
+      <div class="scard"><div class="sv" id="resAcc">0%</div><div class="sl">Accuracy</div></div>
+      <div class="scard"><div class="sv" id="resErrors">0</div><div class="sl">Errors</div></div>
+      <div class="scard"><div class="sv" id="resCons">0%</div><div class="sl">Consistency</div></div>
+      <div class="scard"><div class="sv" id="resStreak">0</div><div class="sl">Best Streak</div></div>
+    </div>
+
+    <div class="ghost-result" id="ghostResult" hidden>
+      <span>👻</span>
+      <div><b id="grVerdict">—</b><span id="grDetail" class="gr-detail"></span></div>
+    </div>
+
+    <div class="res-section">
+      <div class="sec-hd"><span class="sec-ttl">WPM Over Time</span></div>
+      <div class="chart-box"><canvas id="wpmChart"></canvas></div>
+    </div>
+    <div class="res-section">
+      <div class="sec-hd"><span class="sec-ttl">Error Keys</span></div>
+      <div class="err-chips" id="errChips"></div>
+    </div>
+    <div class="res-section">
+      <div class="sec-hd"><span class="sec-ttl">Key Heatmap</span></div>
+      <div class="heatmap-wrap" id="heatmapWrap"></div>
+    </div>
+
+    <div class="res-actions">
+      <button class="ctrl-btn accent" id="btnAgain">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>Play Again
+      </button>
+      <button class="ctrl-btn" id="btnSaveScore">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/></svg>Save Score
+      </button>
+      <button class="ctrl-btn" id="btnShareRes">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>Share
+      </button>
+      <button class="ctrl-btn ghost-ctrl" id="btnSetGhost">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a8 8 0 0 1 8 8v8l-2-2-2 2-2-2-2 2-2-2-2 2v-8a8 8 0 0 1 8-8z"/></svg>Set Ghost
+      </button>
+    </div>
+  </section>
+
+  <!-- ══ SEO CONTENT ══ -->
+  <section class="seo-content" aria-label="About typing speed">
+    <div class="seo-grid">
+      <div class="seo-card">
+        <h2 class="seo-h2">What is WPM?</h2>
+        <p>Words Per Minute measures how fast you type. One "word" equals five characters including spaces. Your WPM score reflects correct five-character groups typed per minute.</p>
+      </div>
+      <div class="seo-card">
+        <h2 class="seo-h2">What is a good typing speed?</h2>
+        <p>The average adult types around 40 WPM. 65–80 WPM is proficient for office work. Programmers typically aim for 80–100 WPM, and professional typists often exceed 120 WPM.</p>
+      </div>
+      <div class="seo-card">
+        <h2 class="seo-h2">How to improve typing speed?</h2>
+        <p>Use daily challenges, focus on accuracy before speed, and review the error breakdown to target weak keys. Consistent 10–15 minute sessions will show improvement within weeks.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BOTTOM AD -->
+<div class="ad-strip" id="adBot" hidden>
+  <div class="ad-placeholder">Advertisement · <a href="https://talionlabs.github.io" target="_blank" rel="noopener">TalionLabs</a></div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <img src="taliontype/logo.png" alt="TalionType" class="ft-logo" onerror="this.style.display='none'" />
+      <div>
+        <div class="ft-name">TalionType</div>
+        <div class="ft-sub">A <a href="https://talionlabs.github.io" target="_blank" rel="noopener" class="ft-link">TalionLabs</a> product</div>
+      </div>
+    </div>
+    <div class="ft-links">
+      <div class="ft-col">
+        <div class="ft-col-ttl">Play</div>
+        <a href="#" class="ft-item" id="ftStats">My Stats</a>
+        <a href="#" class="ft-item" id="ftLB">Leaderboard</a>
+        <a href="#" class="ft-item" id="ftAch">Achievements</a>
+        <a href="#" class="ft-item" id="ftDaily">Daily Challenge</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-col-ttl">Modes</div>
+        <a href="#" class="ft-item ft-mode" data-m="words">Word Sprint</a>
+        <a href="#" class="ft-item ft-mode" data-m="sentences">Sentences</a>
+        <a href="#" class="ft-item ft-mode" data-m="code">Code</a>
+        <a href="#" class="ft-item ft-mode" data-m="punctuation">Punctuation</a>
+        <a href="#" class="ft-item ft-mode" data-m="numbers">Numbers</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-col-ttl">Pro</div>
+        <a href="#" class="ft-item" id="ftPro">Upgrade to Pro</a>
+        <a href="#" class="ft-item" id="ftFeedback">Feedback (Pro only)</a>
+        <a href="https://gumroad.com/l/taliontype-pro" target="_blank" rel="noopener" class="ft-item">Buy on Gumroad</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-col-ttl">TalionLabs</div>
+        <a href="https://talionlabs.github.io" target="_blank" rel="noopener" class="ft-item">Homepage</a>
+        <a href="https://talionlabs.github.io/privacy.html"  target="_blank" rel="noopener" class="ft-item">Privacy Policy</a>
+        <a href="https://talionlabs.github.io/tos.html"      target="_blank" rel="noopener" class="ft-item">Terms of Service</a>
+        <a href="https://talionlabs.github.io/contact.html"  target="_blank" rel="noopener" class="ft-item">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© <span id="copyrightYear"></span> TalionLabs · All rights reserved</span>
+    <a href="https://talionlabs.github.io" target="_blank" rel="noopener" class="ft-link" style="font-size:.73rem">talionlabs.github.io</a>
+  </div>
+</footer>
+
+<!-- ══ SETTINGS PANEL (slide-in) ══ -->
+<aside class="side-panel" id="settingsPanel" hidden aria-label="Settings">
+  <div class="sp-hdr">
+    <h2 class="sp-ttl">Settings</h2>
+    <button class="icon-btn" id="closeSet" aria-label="Close settings">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="sp-body">
+
+    <div class="sg-head">⌨ Typing</div>
+    <div class="sg">
+      <label class="sl2">Font Size</label>
+      <div class="slider-row">
+        <input type="range" id="fsSlider" min="14" max="32" value="20" class="slider" />
+        <span class="slider-val" id="fsVal">20px</span>
+      </div>
+    </div>
+    <div class="sg">
+      <label class="sl2" for="wordCount">Words Per Test</label>
+      <input type="number" id="wordCount" class="si" min="10" max="500" value="50" />
+    </div>
+    <div class="sg">
+      <label class="sl2" for="customTxt">Custom Text (paste your own)</label>
+      <textarea id="customTxt" class="si si-ta" rows="3" placeholder="Switch mode to Custom and paste text here…"></textarea>
+    </div>
+
+    <div class="s-sep"></div>
+    <div class="sg-head">🖥 Display</div>
+    <div class="st-group">
+      <div class="st-row"><span class="sl2">Smooth Caret</span>      <label class="tsw"><input type="checkbox" id="optSmooth"   checked /><span class="ttrack"></span></label></div>
+      <div class="st-row"><span class="sl2">Live WPM</span>          <label class="tsw"><input type="checkbox" id="optLiveWpm" checked /><span class="ttrack"></span></label></div>
+      <div class="st-row"><span class="sl2">Progress Bar</span>      <label class="tsw"><input type="checkbox" id="optProgress" checked /><span class="ttrack"></span></label></div>
+      <div class="st-row"><span class="sl2">Cursor Blink</span>      <label class="tsw"><input type="checkbox" id="optBlink"   checked /><span class="ttrack"></span></label></div>
+    </div>
+
+    <div class="s-sep"></div>
+    <div class="sg-head">🔊 Sound</div>
+    <div class="st-group">
+      <div class="st-row"><span class="sl2">Typing Sounds</span>     <label class="tsw"><input type="checkbox" id="optSound"  /><span class="ttrack"></span></label></div>
+      <div class="st-row"><span class="sl2">Error Sound</span>        <label class="tsw"><input type="checkbox" id="optErrSnd" /><span class="ttrack"></span></label></div>
+    </div>
+    <div class="sg">
+      <label class="sl2">Volume</label>
+      <div class="slider-row">
+        <input type="range" id="volSlider" min="0" max="100" value="60" class="slider" />
+        <span class="slider-val" id="volVal">60%</span>
+      </div>
+    </div>
+
+    <div class="s-sep"></div>
+    <div class="sg-head">📝 Word Mode</div>
+    <div class="st-group">
+      <div class="st-row"><span class="sl2">Add Punctuation</span>   <label class="tsw"><input type="checkbox" id="optPunct" /><span class="ttrack"></span></label></div>
+      <div class="st-row"><span class="sl2">Add Numbers</span>        <label class="tsw"><input type="checkbox" id="optNums"  /><span class="ttrack"></span></label></div>
+    </div>
+
+    <div class="s-sep"></div>
+    <div class="sg-head">🎨 Theme</div>
+    <div class="st-group">
+      <div class="st-row"><span class="sl2">Dark Mode</span>          <label class="tsw"><input type="checkbox" id="optDark" checked /><span class="ttrack"></span></label></div>
+    </div>
+    <div class="sg">
+      <div class="sl2">Accent Color <span class="pro-tag-inline">PRO</span></div>
+      <div class="color-row" id="colorPicker">
+        <button class="cpick active" data-color="teal"   style="--c:#00D9B0" aria-label="Teal"></button>
+        <button class="cpick" data-color="purple" style="--c:#B57BFF" aria-label="Purple"></button>
+        <button class="cpick" data-color="orange" style="--c:#FF6935" aria-label="Orange"></button>
+        <button class="cpick" data-color="blue"   style="--c:#4DB8FF" aria-label="Blue"></button>
+        <button class="cpick" data-color="pink"   style="--c:#FF5FA0" aria-label="Pink"></button>
+        <button class="cpick" data-color="gold"   style="--c:#FFD700" aria-label="Gold"></button>
+      </div>
+    </div>
+
+    <div class="s-sep"></div>
+    <div class="sg-head">♿ Accessibility</div>
+    <div class="st-group">
+      <div class="st-row"><span class="sl2">High Contrast</span>      <label class="tsw"><input type="checkbox" id="optHiCon"       /><span class="ttrack"></span></label></div>
+      <div class="st-row"><span class="sl2">Reduced Motion</span>     <label class="tsw"><input type="checkbox" id="optReducedMotion" /><span class="ttrack"></span></label></div>
+    </div>
+
+    <div class="s-sep"></div>
+    <div class="sg-head">⚠ Data</div>
+    <div class="sg">
+      <p class="sh" style="margin-bottom:.5rem;color:var(--text-m);font-size:.8rem">Clears all local history, achievements, and settings.</p>
+      <button class="ctrl-btn danger small" id="btnResetAll">Reset All Local Data</button>
+    </div>
+
+  </div>
+</aside>
+
+<!-- ══ MODALS ══════════════════════════════════ -->
+
+<!-- AUTH -->
+<div class="modal-ov" id="authOv" hidden>
+  <div class="modal modal-sm">
+    <div class="modal-hdr">
+      <h2>Sign In / Sign Up</h2>
+      <button class="icon-btn" id="closeAuth"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p class="auth-intro">Save scores globally, race ghosts, and track your progress.</p>
+      <button class="prov-btn google" id="btnGoogle">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <div class="auth-or"><span>or</span></div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignIn">Sign In</button>
+        <button class="auth-tab" id="tabSignUp">Sign Up</button>
+      </div>
+      <div class="auth-form">
+        <input type="email"    id="authEmail" class="si" placeholder="Email address"   autocomplete="email" />
+        <input type="password" id="authPw"    class="si" placeholder="Password"        autocomplete="current-password" />
+        <input type="text"     id="authName"  class="si" placeholder="Display name"    autocomplete="name" style="display:none" />
+        <button class="ctrl-btn accent" id="btnEmailIn">Sign In</button>
+        <button class="ctrl-btn small" id="btnForgotPw" style="font-size:.75rem;padding:.3rem .6rem;margin:0 auto">Forgot password?</button>
+        <div class="auth-err" id="authErr" role="alert"></div>
+      </div>
+      <div class="auth-footer">
+        By signing up you agree to our
+        <a href="https://talionlabs.github.io/tos.html" target="_blank" rel="noopener">Terms</a> &amp;
+        <a href="https://talionlabs.github.io/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="modal-ov" id="lbOv" hidden>
+  <div class="modal modal-lg">
+    <div class="modal-hdr">
+      <h2>Leaderboard</h2>
+      <button class="icon-btn" id="closeLB"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-tabs">
+      <button class="tab active" data-lbt="global">🌐 Global</button>
+      <button class="tab" data-lbt="monthly">📅 Monthly</button>
+      <button class="tab" data-lbt="weekly">⚡ Weekly</button>
+      <button class="tab" data-lbt="local">💻 Local</button>
+    </div>
+    <div class="lb-filters">
+      <select class="lb-sel" id="lbModeFilter">
+        <option value="">All Modes</option>
+        <option value="words">Words</option>
+        <option value="sentences">Sentences</option>
+        <option value="code">Code</option>
+        <option value="punctuation">Punctuation</option>
+        <option value="numbers">Numbers</option>
+      </select>
+      <select class="lb-sel" id="lbDiffFilter">
+        <option value="">All Difficulties</option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <select class="lb-sel" id="lbTimeFilter">
+        <option value="">All Durations</option>
+        <option value="15">15s</option>
+        <option value="30">30s</option>
+        <option value="60">60s</option>
+        <option value="120">120s</option>
+      </select>
+      <button class="ctrl-btn small" id="btnLBFilter">Filter</button>
+    </div>
+    <div class="modal-body" id="lbBody"><div class="lb-load">Loading…</div></div>
+    <div class="lb-pb" id="lbPb" hidden>
+      Your best: <b id="lbPbWpm">—</b> · <span id="lbPbRank"></span>
+    </div>
+    <div class="lb-note" id="lbNote">Sign in to post to the global leaderboard.</div>
+  </div>
+</div>
+
+<!-- GHOST -->
+<div class="modal-ov" id="ghostOv" hidden>
+  <div class="modal modal-md">
+    <div class="modal-hdr">
+      <h2>👻 Ghost Race</h2>
+      <button class="icon-btn" id="closeGhost"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="ghostBody"></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="modal-ov" id="statsOv" hidden>
+  <div class="modal modal-lg">
+    <div class="modal-hdr">
+      <h2>Your Statistics</h2>
+      <button class="icon-btn" id="closeStats"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="stat-cards" id="statCards"></div>
+      <div class="res-section" style="margin-top:1.5rem">
+        <div class="sec-hd"><span class="sec-ttl">WPM History (last 30 tests)</span></div>
+        <div class="chart-box"><canvas id="histChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="modal-ov" id="achOv" hidden>
+  <div class="modal modal-lg">
+    <div class="modal-hdr">
+      <h2>Achievements</h2>
+      <button class="icon-btn" id="closeAch"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="ach-stats" id="achStats"></div>
+      <div class="ach-grid" id="achGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY -->
+<div class="modal-ov" id="dailyOv" hidden>
+  <div class="modal modal-md">
+    <div class="modal-hdr">
+      <h2>Daily Challenge</h2>
+      <button class="icon-btn" id="closeDaily"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="dailyBody"></div>
+  </div>
+</div>
+
+<!-- FRIENDS (Pro) -->
+<div class="modal-ov" id="friendsOv" hidden>
+  <div class="modal modal-md">
+    <div class="modal-hdr">
+      <h2>👥 Friends</h2>
+      <button class="icon-btn" id="closeFriends"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="friendsBody"></div>
+  </div>
+</div>
+
+<!-- PRO -->
+<div class="modal-ov" id="proOv" hidden>
+  <div class="modal modal-md">
+    <div class="modal-hdr">
+      <h2>⚡ TalionType Pro</h2>
+      <button class="icon-btn" id="closePro"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="pro-hero">
+        <div class="pro-price">$5 <span class="pro-once">one-time · forever</span></div>
+        <div class="pro-tagline">Unlock the full TalionType experience.</div>
+      </div>
+      <div class="pro-features" id="proFeaturesList"></div>
+      <div class="pro-actions">
+        <a href="https://gumroad.com/l/taliontype-pro" target="_blank" rel="noopener" class="ctrl-btn accent pro-buy-btn" id="btnBuyPro">Buy on Gumroad →</a>
+        <p class="pro-key-label">Already purchased? Enter your license key:</p>
+        <div class="pro-verify">
+          <input type="text" id="proKeyInput" class="si" placeholder="TALION-XXXX-XXXX-XXXX" />
+          <button class="ctrl-btn small" id="btnVerifyPro">Verify</button>
+        </div>
+        <div class="pro-verify-note" id="proVerifyNote"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK (Pro only) -->
+<div class="modal-ov" id="feedbackOv" hidden>
+  <div class="modal modal-sm">
+    <div class="modal-hdr">
+      <h2>💬 Feedback</h2>
+      <button class="icon-btn" id="closeFeedback"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.86rem;color:var(--text-m);margin-bottom:1rem;line-height:1.7">As a Pro user, you have direct access to TalionLabs for suggestions, bugs, or feature requests.</p>
+      <p style="font-size:.86rem;margin-bottom:1rem">Email: <a href="mailto:talionlabs@gmail.com" class="ft-link">talionlabs@gmail.com</a></p>
+      <textarea id="feedbackTxt" class="si si-ta" rows="4" placeholder="Describe your suggestion or bug…"></textarea>
+      <button class="ctrl-btn accent" id="btnSendFeedback" style="width:100%;justify-content:center;margin-top:.75rem">Open in Email App</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE SCORE -->
+<div class="modal-ov" id="saveOv" hidden>
+  <div class="modal modal-sm">
+    <div class="modal-hdr">
+      <h2>Save Score</h2>
+      <button class="icon-btn" id="closeSave"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="save-sum" id="saveSumEl"></div>
+      <div class="save-form">
+        <label class="sl2" for="saveName">Display Name</label>
+        <input type="text" id="saveName" class="si" placeholder="Your name…" maxlength="24" />
+        <button class="ctrl-btn accent" id="btnConfSave">Save to Leaderboard</button>
+        <div class="save-note" id="saveNote"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE -->
+<div class="modal-ov" id="shareOv" hidden>
+  <div class="modal modal-sm">
+    <div class="modal-hdr">
+      <h2>Share Score</h2>
+      <button class="icon-btn" id="closeShare"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="share-card" id="shareCard"></div>
+      <div class="share-btns">
+        <button class="share-btn twitter" id="btnTwitter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Share on X
+        </button>
+        <button class="share-btn copy" id="btnCopy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACHIEVEMENT TOAST -->
+<div class="ach-toast" id="achToast" hidden>
+  <div class="at-inner">
+    <span class="at-icon" id="atIcon">🏆</span>
+    <div class="at-text">
+      <div class="at-pre">Achievement Unlocked!</div>
+      <div class="at-name" id="atName">—</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- BACKDROP — no backdrop-filter to prevent click interception -->
+<div class="backdrop" id="backdrop"></div>
+
+<!-- Firebase SDK — uncomment when ready -->
+<!--
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+-->
+
+<script src="typing.js"></script>
+</body>
+</html>
