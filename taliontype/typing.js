@@ -59,30 +59,6 @@ const LB_MAX      = 50;   // top-50 per leaderboard
 const ADAPT_THRESHOLDS = { easy: 35, medium: 70 }; // <35=easy, <70=medium, else=hard
 
 /* ═══════════════════════════════════════════════════════════
-   §2  FIREBASE SETUP INSTRUCTIONS
-═══════════════════════════════════════════════════════════
-   1. Go to https://console.firebase.google.com
-   2. Create project → Add Web App → copy config JSON
-   3. Enable Authentication: Google + Email/Password
-   4. Enable Firestore Database
-   5. Firestore Security Rules:
-      ─────────────────────────────────────────────────────
-      rules_version = '2';
-      service cloud.firestore {
-        match /databases/{database}/documents {
-          match /{col}/{doc} {
-            allow read: if true;
-            allow create, update: if request.auth != null;
-            allow delete: if false;
-          }
-        }
-      }
-      ─────────────────────────────────────────────────────
-   6. Uncomment the three Firebase <script> tags in index.html
-   7. Paste your config JSON in Settings → Firebase Config → Connect
-═══════════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════════
    §3  WORD BANKS & TEXT CONTENT
 ═══════════════════════════════════════════════════════════ */
 const WORDS = {
@@ -2351,6 +2327,15 @@ function bindEvents() {
 }
 
 // ── Boot ──────────────────────────────────────────────────
+initFirebase({
+  apiKey: "AIzaSyCOuHtbHLnsBCEymB531mdejppQlhx1Iec",
+  authDomain: "taliontype.firebaseapp.com",
+  projectId: "taliontype",
+  storageBucket: "taliontype.firebasestorage.app",
+  messagingSenderId: "272114711228",
+  appId: "1:272114711228:web:ee83a1312052ee0ce26eb9",
+  measurementId: "G-YJ365M26CK"
+});
 function boot() {
   cacheDOM();
   loadTheme();
