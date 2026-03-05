@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TalionLabs — Free AI Tools for Everyone</title>
+  <meta name="description" content="TalionLabs builds free AI-powered tools for resumes, careers, finance, and productivity. No sign-up. No cost. Just tools that work."/>
+  <meta name="keywords" content="free AI tools, resume analyzer, career tools, TalionLabs, AI productivity tools"/>
+  <link rel="canonical" href="https://talionlabs.pages.dev/"/>
+  <meta property="og:title" content="TalionLabs — Free AI Tools for Everyone"/>
+  <meta property="og:description" content="Free AI-powered tools for resumes, careers, and productivity. Built by TalionLabs."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://talionlabs.pages.dev/"/>
+
+  <!-- AdSense — paste your publisher ID here after approval -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:       #000000;
+      --bg2:      #0a0a0a;
+      --bg3:      #111111;
+      --border:   #1e1e1e;
+      --border2:  #2a2a2a;
+      --text:     #f0f0f0;
+      --muted:    #666666;
+      --dim:      #333333;
+      --crimson:  #9b1b30;
+      --crimson2: #c42042;
+      --red-glow: #ff2a4a;
+      --white:    #ffffff;
+      --mono:     'JetBrains Mono', monospace;
+      --serif:    'Cinzel', serif;
+      --sans:     'Instrument Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── SCANLINE GRAIN ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    /* Inline SVG T-logo recreation */
+    .nav-t {
+      width: 28px;
+      height: 32px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .nav-wordmark {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .nav-wordmark .w { color: var(--white); }
+    .nav-wordmark .r { color: var(--crimson2); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white) !important;
+      border: 1px solid var(--crimson);
+      padding: 8px 18px;
+      transition: background 0.2s, border-color 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--crimson) !important;
+      color: var(--white) !important;
+    }
+
+    /* ── AD BANNER ── */
+    .ad-top {
+      margin-top: 64px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ad-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background radial glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(155,27,48,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Horizontal scan lines background */
+    .hero-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 18px,
+        rgba(255,255,255,0.012) 18px,
+        rgba(255,255,255,0.012) 19px
+      );
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 900px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    /* Big T logo */
+    .big-logo {
+      width: 100px;
+      height: 116px;
+      margin: 0 auto 36px;
+      position: relative;
+    }
+
+    /* SVG T built from horizontal lines */
+    .t-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--crimson2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7vw, 88px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+    h1 .w { color: var(--white); }
+    h1 .r { color: var(--crimson2); }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 44px;
+      line-height: 1.7;
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.5s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--crimson);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: 1px solid var(--crimson2);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--crimson2);
+      box-shadow: 0 0 24px rgba(196,32,66,0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: 1px solid var(--border2);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover {
+      color: var(--white);
+      border-color: var(--muted);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s both;
+    }
+    .scroll-hint span {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--dim), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 0 32px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-num span { color: var(--crimson2); }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      padding: 88px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--crimson2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      max-width: 60px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ── TOOLS GRID ── */
+    .tools-section { padding-bottom: 0; }
+
+    .tools-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .tool-card {
+      background: var(--bg);
+      padding: 36px 32px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      display: block;
+    }
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--crimson);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .tool-card:hover { background: var(--bg2); }
+    .tool-card:hover::before { transform: scaleX(1); }
+
+    .tool-card.featured {
+      background: var(--bg2);
+      border-left: 2px solid var(--crimson);
+    }
+    .tool-card.featured::before { transform: scaleX(1); }
+
+    .tool-badge {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--crimson2);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tool-badge .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--crimson2);
+      animation: blink 2s ease infinite;
+    }
+    .tool-badge.soon { color: var(--dim); }
+    .tool-badge.soon .dot { background: var(--dim); animation: none; }
+
+    .tool-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+      filter: grayscale(0.3);
+    }
+
+    .tool-name {
+      font-family: var(--serif);
+      font-size: 19px;
+      color: var(--white);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .tool-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .tool-link {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--crimson2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-link::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+    .tool-card:hover .tool-link::after { transform: translateX(4px); }
+
+    .tool-link.disabled { color: var(--dim); pointer-events: none; }
+    .tool-link.disabled::after { display: none; }
+
+    /* ── MID AD ── */
+    .ad-mid {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      min-height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .how-step {
+      background: var(--bg);
+      padding: 36px 28px;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--border2);
+      line-height: 1;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .step-title {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 10px;
+      letter-spacing: 0.01em;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── WHY TALIONLABS ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .why-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at bottom right, rgba(155,27,48,0.12), transparent);
+    }
+
+    .why-icon {
+      font-size: 22px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .why-title {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .why-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── MANIFEST ── */
+    .manifest {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .manifest::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(155,27,48,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .manifest-quote {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.5vw, 38px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.4;
+      max-width: 780px;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+    .manifest-quote .highlight { color: var(--crimson2); font-style: normal; }
+
+    .manifest-attr {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 48px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    .footer-brand .logo-text {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .footer-brand .logo-text .w { color: var(--white); }
+    .footer-brand .logo-text .r { color: var(--crimson2); }
+
+    .footer-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--white); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-tagline {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+    }
+    .footer-tagline span { color: var(--crimson); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 1; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+    @keyframes glowPulse {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(255,42,74,0.6)); }
+      50%       { filter: drop-shadow(0 0 12px rgba(255,42,74,1)); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+      .how-grid { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      section { padding: 56px 24px; }
+      .stats-bar { flex-wrap: wrap; gap: 1px; background: var(--border); }
+      .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    @media (max-width: 600px) {
+      .tools-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <!-- Inline T logo (simplified scanline version) -->
+      <svg class="nav-t" width="28" height="32" viewBox="0 0 28 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Horizontal scanlines forming T shape -->
+        <g opacity="0.9">
+          <!-- Top bar lines -->
+          <rect x="0" y="1" width="28" height="1.2" rx="0.6" fill="white"/>
+          <rect x="0" y="3.5" width="28" height="1" rx="0.5" fill="white" opacity="0.85"/>
+          <rect x="0" y="5.8" width="28" height="0.9" rx="0.45" fill="white" opacity="0.75"/>
+          <rect x="0" y="7.8" width="28" height="0.8" rx="0.4" fill="white" opacity="0.65"/>
+          <rect x="0" y="9.6" width="28" height="0.7" rx="0.35" fill="white" opacity="0.55"/>
+          <!-- Stem lines -->
+          <rect x="9" y="11.5" width="10" height="0.8" rx="0.4" fill="white" opacity="0.9"/>
+          <rect x="9.5" y="13.5" width="9" height="0.75" rx="0.375" fill="white" opacity="0.82"/>
+          <rect x="10" y="15.3" width="8" height="0.7" rx="0.35" fill="white" opacity="0.74"/>
+          <rect x="10.5" y="17" width="7" height="0.65" rx="0.325" fill="white" opacity="0.66"/>
+          <rect x="11" y="18.6" width="6" height="0.6" rx="0.3" fill="white" opacity="0.58"/>
+          <rect x="11" y="20.1" width="6" height="0.55" rx="0.275" fill="white" opacity="0.50"/>
+          <rect x="11" y="21.5" width="6" height="0.5" rx="0.25" fill="white" opacity="0.44"/>
+          <rect x="11" y="22.8" width="6" height="0.5" rx="0.25" fill="white" opacity="0.38"/>
+          <rect x="11" y="24" width="6" height="0.45" rx="0.225" fill="white" opacity="0.32"/>
+          <rect x="11" y="25.1" width="6" height="0.4" rx="0.2" fill="white" opacity="0.26"/>
+          <rect x="11" y="26.1" width="6" height="0.4" rx="0.2" fill="white" opacity="0.20"/>
+          <rect x="11" y="27" width="6" height="0.35" rx="0.175" fill="white" opacity="0.15"/>
+          <rect x="11" y="27.8" width="6" height="0.3" rx="0.15" fill="white" opacity="0.10"/>
+        </g>
+        <!-- Red neon arch -->
+        <path d="M12 11 L14 4 L16 11" stroke="#ff2a4a" stroke-width="1.4" fill="none" stroke-linecap="round" style="animation: glowPulse 3s ease infinite;"/>
+        <rect x="11.5" y="11" width="5" height="0.8" rx="0.4" fill="#ff2a4a" opacity="0.9"/>
+      </svg>
+      <div class="nav-wordmark">
+        <span class="w">Talion</span><span class="r">Labs</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="about.html">Blog</a></li>
+      <li><a href="about.html" class="nav-cta">Free Tools →</a></li>
+    </ul>
+  </nav>
+
+  <!-- TOP AD BANNER -->
+  <div class="ad-top">
+    <!-- AdSense Leaderboard 728x90 -->
+    <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins> -->
+    <span class="ad-label">Advertisement</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-scanlines"></div>
+
+    <div class="hero-content">
+
+      <!-- Big Logo -->
+      <div class="big-logo">
+        <svg class="t-svg" viewBox="0 0 100 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <!-- Top bar scanlines -->
+            <rect x="0" y="3" width="100" height="4" rx="2" fill="white"/>
+            <rect x="0" y="10" width="100" height="3.5" rx="1.75" fill="white" opacity="0.88"/>
+            <rect x="0" y="17" width="100" height="3" rx="1.5" fill="white" opacity="0.78"/>
+            <rect x="0" y="23" width="100" height="2.8" rx="1.4" fill="white" opacity="0.70"/>
+            <rect x="0" y="29" width="100" height="2.5" rx="1.25" fill="white" opacity="0.62"/>
+            <!-- Stem scanlines -->
+            <rect x="33" y="36" width="34" height="2.8" rx="1.4" fill="white" opacity="0.88"/>
+            <rect x="34" y="43" width="32" height="2.6" rx="1.3" fill="white" opacity="0.80"/>
+            <rect x="35" y="49.5" width="30" height="2.4" rx="1.2" fill="white" opacity="0.72"/>
+            <rect x="36" y="55.5" width="28" height="2.2" rx="1.1" fill="white" opacity="0.65"/>
+            <rect x="37" y="61" width="26" height="2" rx="1" fill="white" opacity="0.58"/>
+            <rect x="38" y="66" width="24" height="1.9" rx="0.95" fill="white" opacity="0.52"/>
+            <rect x="38" y="71" width="24" height="1.8" rx="0.9" fill="white" opacity="0.46"/>
+            <rect x="38" y="76" width="24" height="1.7" rx="0.85" fill="white" opacity="0.40"/>
+            <rect x="38" y="80.5" width="24" height="1.6" rx="0.8" fill="white" opacity="0.35"/>
+            <rect x="38" y="85" width="24" height="1.5" rx="0.75" fill="white" opacity="0.30"/>
+            <rect x="38" y="89" width="24" height="1.4" rx="0.7" fill="white" opacity="0.25"/>
+            <rect x="38" y="92.5" width="24" height="1.3" rx="0.65" fill="white" opacity="0.20"/>
+            <rect x="38" y="96" width="24" height="1.2" rx="0.6" fill="white" opacity="0.15"/>
+            <rect x="38" y="99" width="24" height="1.1" rx="0.55" fill="white" opacity="0.10"/>
+            <rect x="38" y="102" width="24" height="1" rx="0.5" fill="white" opacity="0.07"/>
+            <!-- Red neon arch -->
+            <path d="M42 36 L50 8 L58 36" stroke="#ff2a4a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="40" y="36" width="20" height="2.5" rx="1.25" fill="#ff2a4a"/>
+            <!-- Glow effect -->
+            <path d="M42 36 L50 8 L58 36" stroke="#ff2a4a" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.2"/>
+            <rect x="38" y="35" width="24" height="5" rx="2.5" fill="#ff2a4a" opacity="0.15"/>
+          </g>
+        </svg>
+      </div>
+
+      <p class="hero-eyebrow">// talionlabs.pages.dev</p>
+
+      <h1>
+        <span class="w">Free AI Tools</span><br/>
+        <span class="r">Built to Work.</span>
+      </h1>
+
+      <p class="hero-sub">
+        No sign-ups. No paywalls. No nonsense.
+        TalionLabs builds powerful free tools that help real people with real problems — careers, finance, productivity.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://talionlabs-resume.pages.dev" class="btn-primary">
+          Try Resume Analyzer
+        </a>
+        <a href="#tools" class="btn-secondary">
+          See All Tools
+        </a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">8<span>+</span></div>
+      <div class="stat-label">Free Tools</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0<span>$</span></div>
+      <div class="stat-label">Cost to Use</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">AI Powered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Sign-ups Required</div>
+    </div>
+  </div>
+
+  <!-- TOOLS SECTION -->
+  <section id="tools" class="tools-section">
+    <div class="tools-header">
+      <div>
+        <div class="section-label">Tools</div>
+        <h2 class="section-title">Everything We've Built</h2>
+        <p class="section-sub">Every tool is free, instant, and powered by state-of-the-art AI. No account needed.</p>
+      </div>
+    </div>
+
+    <div class="tools-grid">
+
+      <!-- LIVE TOOL -->
+      <a href="https://talionlabs-resume.pages.dev" class="tool-card featured">
+        <div class="tool-badge"><span class="dot"></span> Live Now</div>
+        <span class="tool-icon">📄</span>
+        <div class="tool-name">AI Resume Analyzer</div>
+        <p class="tool-desc">Paste your resume, get instant AI feedback. ATS score, weak sections identified, keyword gaps, and specific improvements — in seconds.</p>
+        <div class="tool-link">Analyze My Resume</div>
+      </a>
+
+      <!-- COMING SOON -->
+      <a href="#" class="tool-card">
+        <div class="tool-badge soon">Coming Soon</div>
+        <span class="tool-icon">✉️</span>
+        <div class="tool-name">AI Cover Letter Generator</div>
+        <p class="tool-desc">Generate a tailored, professional cover letter from your resume and job description. Personalized, not generic.</p>
+        <div class="tool-link disabled">Coming Soon</div>
+      </a>
+
+      <a href="#" class="tool-card">
+        <div class="tool-badge soon">Coming Soon</div>
+        <span class="tool-icon">💰</span>
+        <div class="tool-name">Budget Planner</div>
+        <p class="tool-desc">Plan your monthly budget intelligently. AI analyzes your spending habits and suggests where to cut and save.</p>
+        <div class="tool-link disabled">Coming Soon</div>
+      </a>
+
+      <a href="#" class="tool-card">
+        <div class="tool-badge soon">Coming Soon</div>
+        <span class="tool-icon">📝</span>
+        <div class="tool-name">AI Text Summarizer</div>
+        <p class="tool-desc">Paste any long article, document, or report. Get a concise, accurate summary in your preferred length.</p>
+        <div class="tool-link disabled">Coming Soon</div>
+      </a>
+
+      <a href="#" class="tool-card">
+        <div class="tool-badge soon">Coming Soon</div>
+        <span class="tool-icon">🏦</span>
+        <div class="tool-name">Loan EMI Calculator</div>
+        <p class="tool-desc">Calculate your exact EMI, total interest, and full repayment schedule for any loan instantly.</p>
+        <div class="tool-link disabled">Coming Soon</div>
+      </a>
+
+      <a href="#" class="tool-card">
+        <div class="tool-badge soon">Coming Soon</div>
+        <span class="tool-icon">🔍</span>
+        <div class="tool-name">AI Job Description Analyzer</div>
+        <p class="tool-desc">Decode any job posting. Understand what skills they really want, red flags to watch, and how to tailor your application.</p>
+        <div class="tool-link disabled">Coming Soon</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- MID AD -->
+  <div class="ad-mid">
+    <!-- AdSense Rectangle 336x280 or Responsive -->
+    <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+    <span class="ad-label">Advertisement</span>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section id="about">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">How TalionLabs Works</h2>
+    <p class="section-sub">Every tool follows the same simple pattern. No learning curve.</p>
+
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Open Any Tool</div>
+        <p class="step-desc">Pick the tool you need from the list above. No account. No sign-up. Just click and go.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Paste Your Input</div>
+        <p class="step-desc">Enter your text, data, or content into the tool. Most tools take under 30 seconds to set up.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-title">AI Does the Work</div>
+        <p class="step-desc">Our tools run on state-of-the-art AI models. Results are generated instantly and accurately.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Use the Results</div>
+        <p class="step-desc">Read, copy, and apply the output directly. No exports, no downloads needed unless you want them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY TALIONLABS -->
+  <section>
+    <div class="section-label">Why Us</div>
+    <h2 class="section-title">Why TalionLabs</h2>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">⚡</span>
+        <div class="why-title">Always Free</div>
+        <p class="why-text">Every tool on TalionLabs is completely free. No freemium traps, no usage limits, no hidden paywalls. Free means free.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🔒</span>
+        <div class="why-title">Privacy First</div>
+        <p class="why-text">Your resume, your data. Nothing you enter is stored on our servers. The AI processes your input and it's gone.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🤖</span>
+        <div class="why-title">Genuinely Powerful AI</div>
+        <p class="why-text">We use the same AI technology that powers enterprise tools — available to everyone, not just companies with big budgets.</p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">📱</span>
+        <div class="why-title">Works Everywhere</div>
+        <p class="why-text">Every tool is built mobile-first. Phone, tablet, laptop — the same experience everywhere with no app to install.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFEST -->
+  <div class="manifest">
+    <p class="manifest-quote">
+      "The best tools shouldn't be locked behind a <span class="highlight">$49/month</span> subscription. We built TalionLabs so anyone, anywhere, can access AI that actually helps."
+    </p>
+    <p class="manifest-attr">— TalionLabs</p>
+  </div>
+
+  <!-- FOOTER AD -->
+  <div class="ad-mid" style="min-height:90px;">
+    <!-- AdSense Leaderboard or Responsive -->
+    <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins> -->
+    <span class="ad-label">Advertisement</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <span class="logo-text"><span class="w">Talion</span><span class="r">Labs</span></span>
+        <p class="footer-desc">Free AI-powered tools for resumes, careers, finance, and productivity. No sign-ups. No cost. Just tools that work.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="https://talionlabs-resume.pages.dev">Resume Analyzer</a></li>
+          <li><a href="#">Cover Letter Gen</a></li>
+          <li><a href="#">Budget Planner</a></li>
+          <li><a href="#">Text Summarizer</a></li>
+          <li><a href="#">EMI Calculator</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Resume Tips Blog</a></li>
+          <li><a href="#">Career Guides</a></li>
+          <li><a href="#">Finance Basics</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 TalionLabs. All rights reserved.</p>
+      <p class="footer-tagline">Built with <span>♥</span> and zero investment.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
