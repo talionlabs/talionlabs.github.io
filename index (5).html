@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TalionLabs — Tools That Work</title>
+  <meta name="description" content="TalionLabs builds free tools for resumes, careers, and productivity. No sign-up. No cost."/>
+  <meta name="keywords" content="free resume analyzer, resume feedback, career tools, TalionLabs"/>
+  <link rel="canonical" href="https://talionlabs.pages.dev/"/>
+  <meta property="og:title" content="TalionLabs — Tools That Work"/>
+  <meta property="og:description" content="Free tools for resumes, careers, and productivity."/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32"/>
+
+  <!-- AdSense — replace ca-pub-XXXXXXXXXXXXXXXX after approval -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:      #0e0e11;
+      --bg2:     #15151a;
+      --bg3:     #1c1c22;
+      --border:  #252530;
+      --border2: #333340;
+      --text:    #e6e6ea;
+      --muted:   #80808e;
+      --dim:     #40404e;
+      --crimson: #9b1b30;
+      --crim2:   #c42042;
+      --crim3:   #e8314f;
+      --white:   #ffffff;
+      --mono:    'JetBrains Mono', monospace;
+      --serif:   'Cinzel', serif;
+      --sans:    'Instrument Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ════════════════════════════════
+       NAV
+    ════════════════════════════════ */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(14,14,17,0.96);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+    .nav-wordmark {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .nav-wordmark .w { color: var(--white); }
+    .nav-wordmark .r { color: var(--crim2); }
+
+    .nav-center {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-link:hover { color: var(--text); background: var(--bg2); }
+
+    /* Dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s, background 0.2s;
+      border-radius: 2px;
+    }
+    .nav-dropdown-btn:hover { color: var(--text); background: var(--bg2); }
+
+    .chevron {
+      width: 10px; height: 10px;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .nav-dropdown:hover .chevron,
+    .nav-dropdown.open .chevron { transform: rotate(180deg); }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      min-width: 220px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+      z-index: 300;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    }
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown.open .dropdown-menu {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      position: relative;
+    }
+    .dropdown-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--crim2);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+    }
+    .dropdown-item:last-child { border-bottom: none; }
+    .dropdown-item:hover { background: var(--bg3); }
+    .dropdown-item:hover::before { transform: scaleY(1); }
+
+    .di-icon { font-size: 15px; flex-shrink: 0; }
+    .di-name {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 1px;
+    }
+    .di-cat {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .di-badge {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 8px;
+      padding: 2px 7px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      border: 1px solid;
+    }
+    .di-badge.live { color: var(--crim2); border-color: var(--crimson); }
+    .di-badge.soon { color: var(--dim); border-color: var(--border2); }
+
+    /* Nav right */
+    .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    .nav-search-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      background: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      color: var(--muted);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .nav-search-btn:hover { color: var(--text); border-color: var(--border2); background: var(--bg2); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      padding: 9px;
+    }
+    .hamburger span {
+      display: block; width: 100%; height: 1.5px;
+      background: var(--muted);
+      transition: transform 0.22s, opacity 0.22s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      z-index: 190;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+      transform: translateY(-4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 0.22s ease, opacity 0.22s, visibility 0.22s;
+    }
+    .mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mob-section-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 18px 24px 8px;
+    }
+    .mob-link {
+      display: flex; align-items: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mob-link:hover { color: var(--text); background: var(--bg3); }
+
+    .mob-tool {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 24px;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .mob-tool:hover { background: var(--bg3); }
+    .mob-tool-icon { font-size: 20px; flex-shrink: 0; }
+    .mob-tool-name {
+      font-size: 14px; font-weight: 600; color: var(--text);
+      display: block; margin-bottom: 2px;
+    }
+    .mob-tool-meta {
+      font-family: var(--mono);
+      font-size: 10px; color: var(--muted);
+    }
+    .mob-tool-badge {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 8px; padding: 2px 7px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid; flex-shrink: 0;
+    }
+    .mob-tool-badge.live { color: var(--crim2); border-color: var(--crimson); }
+    .mob-tool-badge.soon { color: var(--dim); border-color: var(--border2); }
+
+    /* ════════════════════════════════
+       SEARCH OVERLAY
+    ════════════════════════════════ */
+    .search-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 500;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 100px;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .search-overlay.active { opacity: 1; visibility: visible; }
+
+    .search-box {
+      width: 100%; max-width: 600px;
+      margin: 0 24px;
+    }
+
+    .search-wrap {
+      display: flex; align-items: center;
+      border: 1px solid var(--border2);
+      background: var(--bg2);
+      padding: 0 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .search-icon { color: var(--muted); flex-shrink: 0; margin-right: 14px; }
+    .search-input {
+      flex: 1; background: none; border: none; outline: none;
+      font-family: var(--mono); font-size: 15px; color: var(--text);
+      padding: 18px 0; letter-spacing: 0.04em;
+    }
+    .search-input::placeholder { color: var(--dim); }
+    .search-esc {
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); cursor: pointer;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 10px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .search-esc:hover { color: var(--text); border-color: var(--border2); }
+
+    .search-results {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-top: none;
+      display: none;
+    }
+    .search-results.visible { display: block; }
+
+    .search-result-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: var(--bg3); }
+    .sr-icon { font-size: 18px; flex-shrink: 0; }
+    .sr-name { font-size: 13px; font-weight: 600; color: var(--text); display: block; margin-bottom: 2px; }
+    .sr-desc { font-size: 12px; color: var(--muted); }
+
+    .search-no-results {
+      padding: 20px 18px;
+      font-family: var(--mono);
+      font-size: 11px; color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+
+    .search-footer {
+      font-family: var(--mono);
+      font-size: 9px; color: var(--dim);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-top: 14px;
+      display: flex; gap: 20px;
+    }
+
+    /* ════════════════════════════════
+       AD BANNER
+    ════════════════════════════════ */
+    .ad-banner {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      min-height: 90px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ad-label {
+      font-family: var(--mono);
+      font-size: 9px; color: var(--dim);
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Subtle grid bg */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    /* Radial fade over grid */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, transparent 30%, var(--bg) 75%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      padding: 100px 48px 88px;
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px; color: var(--crim2);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex; align-items: center;
+      justify-content: center; gap: 14px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--crim2); opacity: 0.5;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(38px, 5.5vw, 72px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.06;
+      letter-spacing: 0.02em;
+      margin-bottom: 26px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--crim2);
+    }
+
+    .hero-desc {
+      font-size: 17px; color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 14px;
+      justify-content: center; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--crimson); color: var(--white);
+      text-decoration: none;
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 14px 30px;
+      border: 1px solid var(--crim2);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--crim2);
+      box-shadow: 0 4px 28px rgba(196,32,66,0.35);
+    }
+    .btn-primary .arr { transition: transform 0.2s; }
+    .btn-primary:hover .arr { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center;
+      background: transparent; color: var(--muted);
+      text-decoration: none;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 14px 30px;
+      border: 1px solid var(--border2);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { color: var(--white); border-color: var(--muted); background: var(--bg2); }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+      margin-top: 56px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s both;
+    }
+    .hero-scroll span {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .scroll-track {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--border2), transparent);
+      animation: scrollPulse 2.5s ease infinite;
+    }
+
+    /* ════════════════════════════════
+       TOOL SECTION
+    ════════════════════════════════ */
+    .section-wrap {
+      padding: 80px 52px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px; color: var(--crim2);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      width: 36px; height: 1px;
+      background: var(--border2);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.8vw, 34px);
+      font-weight: 600; color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .section-sub {
+      font-size: 15px; color: var(--muted);
+      max-width: 460px; line-height: 1.72;
+      margin-bottom: 40px;
+    }
+
+    /* Tool feature card */
+    .tool-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      overflow: hidden;
+    }
+
+    .tc-left {
+      padding: 48px;
+      border-right: 1px solid var(--border);
+    }
+
+    .tool-title {
+      font-family: var(--serif);
+      font-size: 24px; font-weight: 600;
+      color: var(--white); margin-bottom: 14px;
+    }
+
+    .tool-desc {
+      font-size: 14px; color: var(--muted);
+      line-height: 1.72; margin-bottom: 28px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 11px;
+      margin-bottom: 36px;
+    }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 14px; color: var(--muted); line-height: 1.5;
+    }
+    .feature-list li::before {
+      content: '—';
+      color: var(--crim2);
+      font-family: var(--mono); font-size: 11px;
+      flex-shrink: 0; margin-top: 3px;
+    }
+
+    .tc-right {
+      padding: 40px;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 10px;
+    }
+
+    .step-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .step-item:hover { border-color: var(--border2); background: var(--bg3); }
+
+    .step-num {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--crim2); flex-shrink: 0; margin-top: 2px;
+    }
+    .step-title { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .step-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    /* ════════════════════════════════
+       AD MID
+    ════════════════════════════════ */
+    .ad-mid {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      min-height: 260px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ════════════════════════════════
+       HOW IT WORKS
+    ════════════════════════════════ */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .how-step {
+      background: var(--bg);
+      padding: 36px 30px;
+      transition: background 0.2s;
+    }
+    .how-step:hover { background: var(--bg2); }
+
+    .how-num {
+      font-family: var(--mono); font-size: 38px;
+      font-weight: 300; color: var(--border2);
+      line-height: 1; margin-bottom: 18px;
+    }
+    .how-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 9px; }
+    .how-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ════════════════════════════════
+       TRUST BAR
+    ════════════════════════════════ */
+    .trust-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .trust-item {
+      padding: 32px 40px;
+      border-right: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+    .trust-item:last-child { border-right: none; }
+
+    .trust-icon {
+      font-size: 22px; flex-shrink: 0; margin-top: 2px;
+    }
+    .trust-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 5px; }
+    .trust-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 52px;
+    }
+
+    .footer-grid {
+      max-width: 1120px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 52px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+
+    .footer-brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .footer-brand-logo img { width: 26px; height: 26px; object-fit: contain; }
+    .footer-brand-name { font-family: var(--serif); font-size: 16px; font-weight: 600; }
+    .footer-brand-name .w { color: var(--white); }
+    .footer-brand-name .r { color: var(--crim2); }
+    .footer-brand-desc { font-size: 13px; color: var(--muted); line-height: 1.72; max-width: 260px; }
+
+    .footer-col h4 {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--muted); letter-spacing: 0.15em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul a {
+      font-size: 13px; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--white); }
+
+    .footer-bottom {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--dim); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--muted); }
+
+    /* ════════════════════════════════
+       ANIMATIONS
+    ════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.2; }
+      50%       { opacity: 0.8; }
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 960px) {
+      nav { padding: 0 20px; }
+      .nav-center { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+
+      .hero-inner { padding: 72px 24px 64px; }
+      .section-wrap { padding: 56px 24px; }
+
+      .tool-card { grid-template-columns: 1fr; }
+      .tc-left { border-right: none; border-bottom: 1px solid var(--border); padding: 32px 24px; }
+      .tc-right { padding: 32px 24px; }
+
+      .how-grid { grid-template-columns: 1fr 1fr; }
+
+      .trust-bar { grid-template-columns: 1fr; }
+      .trust-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .trust-item:last-child { border-bottom: none; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      footer { padding: 40px 24px; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 34px; }
+      .hero-desc { font-size: 15px; }
+      .how-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="favicon.svg" alt="TalionLabs"/>
+    <div class="nav-wordmark"><span class="w">Talion</span><span class="r">Labs</span></div>
+  </a>
+
+  <div class="nav-center">
+    <a href="/" class="nav-link">Home</a>
+
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn">
+        Tools
+        <svg class="chevron" viewBox="0 0 10 10" fill="none">
+          <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown-menu">
+        <a href="https://talion-resume.pages.dev" class="dropdown-item">
+          <span class="di-icon">📄</span>
+          <div><span class="di-name">Resume Analyzer</span><span class="di-cat">Career</span></div>
+          <span class="di-badge live">Live</span>
+        </a>
+        <a href="#" class="dropdown-item">
+          <span class="di-icon">✉️</span>
+          <div><span class="di-name">Cover Letter Generator</span><span class="di-cat">Career</span></div>
+          <span class="di-badge soon">Soon</span>
+        </a>
+        <a href="#" class="dropdown-item">
+          <span class="di-icon">💰</span>
+          <div><span class="di-name">Budget Planner</span><span class="di-cat">Finance</span></div>
+          <span class="di-badge soon">Soon</span>
+        </a>
+        <a href="#" class="dropdown-item">
+          <span class="di-icon">🏦</span>
+          <div><span class="di-name">EMI Calculator</span><span class="di-cat">Finance</span></div>
+          <span class="di-badge soon">Soon</span>
+        </a>
+      </div>
+    </div>
+
+    <a href="about.html" class="nav-link">About</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-search-btn" id="searchBtn" aria-label="Search">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 10L13.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" class="mob-link">Home</a>
+  <a href="about.html" class="mob-link">About</a>
+  <a href="privacy.html" class="mob-link">Privacy Policy</a>
+
+  <div class="mob-section-label">Tools</div>
+
+  <a href="https://talion-resume.pages.dev" class="mob-tool">
+    <span class="mob-tool-icon">📄</span>
+    <div>
+      <span class="mob-tool-name">Resume Analyzer</span>
+      <span class="mob-tool-meta">Career</span>
+    </div>
+    <span class="mob-tool-badge live">Live</span>
+  </a>
+  <a href="#" class="mob-tool">
+    <span class="mob-tool-icon">✉️</span>
+    <div>
+      <span class="mob-tool-name">Cover Letter Generator</span>
+      <span class="mob-tool-meta">Career</span>
+    </div>
+    <span class="mob-tool-badge soon">Soon</span>
+  </a>
+  <a href="#" class="mob-tool">
+    <span class="mob-tool-icon">💰</span>
+    <div>
+      <span class="mob-tool-name">Budget Planner</span>
+      <span class="mob-tool-meta">Finance</span>
+    </div>
+    <span class="mob-tool-badge soon">Soon</span>
+  </a>
+  <a href="#" class="mob-tool">
+    <span class="mob-tool-icon">🏦</span>
+    <div>
+      <span class="mob-tool-name">EMI Calculator</span>
+      <span class="mob-tool-meta">Finance</span>
+    </div>
+    <span class="mob-tool-badge soon">Soon</span>
+  </a>
+</div>
+
+<!-- ── SEARCH OVERLAY ── -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 15 15" fill="none">
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 10L13.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" class="search-input" placeholder="Search tools..." id="searchInput" autocomplete="off"/>
+      <button class="search-esc" id="searchClose">ESC</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+    <div class="search-footer">
+      <span>↑↓ navigate</span>
+      <span>↵ open</span>
+      <span>ESC close</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOP AD ── -->
+<div class="ad-banner">
+  <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins> -->
+  <span class="ad-label">Advertisement</span>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">TalionLabs</p>
+    <h1>Tools That Help<br/>You <em>Get Ahead.</em></h1>
+    <p class="hero-desc">
+      Free, fast, and genuinely useful tools for your career and finances.
+      No account required. No catches.
+    </p>
+    <div class="hero-ctas">
+      <a href="#tools" class="btn-primary">
+        Explore Tools <span class="arr">→</span>
+      </a>
+      <a href="about.html" class="btn-ghost">About Us</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-track"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOOL SECTION ── -->
+<section id="tools" class="section-wrap">
+  <div class="section-label">Featured Tool</div>
+  <h2>Talion Resume</h2>
+  <p class="section-sub">Paste your resume, get a detailed breakdown of what's working, what isn't, and exactly what to fix.</p>
+
+  <div class="tool-card">
+    <div class="tc-left">
+      <div class="tool-title">Resume Analyzer</div>
+      <p class="tool-desc">Know exactly where your resume stands before sending it to a recruiter. Get a score, section-by-section feedback, missing keywords, and specific improvements — instantly.</p>
+      <ul class="feature-list">
+        <li>Overall resume score out of 100</li>
+        <li>ATS compatibility check — see if automated filters will pass you through</li>
+        <li>Section ratings for Summary, Experience, Skills, and Education</li>
+        <li>Missing keywords based on your target job title</li>
+        <li>Top 5 actionable improvements you can make today</li>
+      </ul>
+      <a href="https://talion-resume.pages.dev" class="btn-primary">
+        Open Tool <span class="arr">→</span>
+      </a>
+    </div>
+
+    <div class="tc-right">
+      <div class="step-item">
+        <span class="step-num">01</span>
+        <div>
+          <div class="step-title">Paste your resume</div>
+          <p class="step-desc">Copy and paste your full resume text. No formatting required.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">02</span>
+        <div>
+          <div class="step-title">Enter your target job title</div>
+          <p class="step-desc">The analysis is tailored specifically to that role and its keywords.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">03</span>
+        <div>
+          <div class="step-title">Get your full report</div>
+          <p class="step-desc">Score, ATS check, section ratings, keyword gaps, and improvements in seconds.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">04</span>
+        <div>
+          <div class="step-title">Fix and resubmit</div>
+          <p class="step-desc">Apply the changes, paste again, watch your score improve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MID AD ── -->
+<div class="ad-mid">
+  <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+  <span class="ad-label">Advertisement</span>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how" class="section-wrap">
+  <div class="section-label">Process</div>
+  <h2>Simple by Design</h2>
+  <p class="section-sub">No tutorials. No learning curve. Open any tool and go.</p>
+
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-num">01</div>
+      <div class="how-title">Open the Tool</div>
+      <p class="how-desc">Click any tool. It loads instantly in your browser. No sign-up, no download, nothing to install.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">02</div>
+      <div class="how-title">Paste Your Input</div>
+      <p class="how-desc">Enter your content — resume, text, or numbers. Most tools are set up in under 30 seconds.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">03</div>
+      <div class="how-title">Apply the Results</div>
+      <p class="how-desc">Read, copy, and use the output directly. Come back anytime — always free, always instant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <span class="trust-icon">🔒</span>
+    <div>
+      <div class="trust-title">Your Data Stays Yours</div>
+      <p class="trust-text">Nothing you enter is stored. Your resume is processed and immediately discarded.</p>
+    </div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">⚡</span>
+    <div>
+      <div class="trust-title">No Account. Ever.</div>
+      <p class="trust-text">No sign-up form. No email required. No password. Open any tool and use it immediately.</p>
+    </div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">📱</span>
+    <div>
+      <div class="trust-title">Works on Any Device</div>
+      <p class="trust-text">Every tool is built mobile-first. Phone, tablet, or laptop — same experience everywhere.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOTTOM AD ── -->
+<div class="ad-mid" style="min-height:90px;">
+  <!-- <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX"></ins> -->
+  <span class="ad-label">Advertisement</span>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-logo">
+        <img src="favicon.svg" alt="TalionLabs"/>
+        <span class="footer-brand-name"><span class="w">Talion</span><span class="r">Labs</span></span>
+      </div>
+      <p class="footer-brand-desc">Free tools for resumes, careers, and finances. Built to be genuinely useful.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="https://talion-resume.pages.dev">Resume Analyzer</a></li>
+        <li><a href="#">Cover Letter Gen</a></li>
+        <li><a href="#">Budget Planner</a></li>
+        <li><a href="#">EMI Calculator</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="about.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 TalionLabs. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Tool data for search ──
+  const TOOLS = [
+    { name: 'Resume Analyzer', cat: 'Career', desc: 'Score, ATS check, keyword gaps, section ratings', icon: '📄', url: 'https://talion-resume.pages.dev', live: true },
+    { name: 'Cover Letter Generator', cat: 'Career', desc: 'Tailored cover letters from your resume', icon: '✉️', url: '#', live: false },
+    { name: 'Budget Planner', cat: 'Finance', desc: 'Plan and optimise your monthly budget', icon: '💰', url: '#', live: false },
+    { name: 'EMI Calculator', cat: 'Finance', desc: 'Calculate loan EMI and repayment schedule', icon: '🏦', url: '#', live: false },
+  ];
+
+  // ── Search ──
+  const searchBtn    = document.getElementById('searchBtn');
+  const searchOverlay = document.getElementById('searchOverlay');
+  const searchClose  = document.getElementById('searchClose');
+  const searchInput  = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  function openSearch() {
+    searchOverlay.classList.add('active');
+    setTimeout(() => searchInput.focus(), 80);
+  }
+  function closeSearch() {
+    searchOverlay.classList.remove('active');
+    searchInput.value = '';
+    searchResults.innerHTML = '';
+    searchResults.classList.remove('visible');
+  }
+
+  searchBtn.addEventListener('click', openSearch);
+  searchClose.addEventListener('click', closeSearch);
+  searchOverlay.addEventListener('click', e => { if (e.target === searchOverlay) closeSearch(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    if (!q) { searchResults.innerHTML = ''; searchResults.classList.remove('visible'); return; }
+
+    const hits = TOOLS.filter(t =>
+      t.name.toLowerCase().includes(q) ||
+      t.cat.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q)
+    );
+
+    searchResults.classList.add('visible');
+    if (hits.length === 0) {
+      searchResults.innerHTML = `<div class="search-no-results">No tools found for "${q}"</div>`;
+    } else {
+      searchResults.innerHTML = hits.map(t => `
+        <a href="${t.url}" class="search-result-item">
+          <span class="sr-icon">${t.icon}</span>
+          <div>
+            <span class="sr-name">${t.name} ${t.live ? '<span style="font-family:var(--mono);font-size:9px;color:var(--crim2);border:1px solid var(--crimson);padding:1px 5px;margin-left:6px;letter-spacing:0.08em;">LIVE</span>' : ''}</span>
+            <span class="sr-desc">${t.cat} · ${t.desc}</span>
+          </div>
+        </a>
+      `).join('');
+    }
+  });
+
+  // ── Hamburger ──
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu   = document.getElementById('mobileMenu');
+
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('nav') && !e.target.closest('.mobile-menu')) {
+      hamburgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+  });
+
+  // ── Dropdown ──
+  document.querySelectorAll('.nav-dropdown-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.closest('.nav-dropdown').classList.toggle('open');
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+</script>
+
+</body>
+</html>
